@@ -1,11 +1,22 @@
 <template>
+  <!-- 登录页面容器 -->
   <div class="login-container">
-    <el-form ref="loginForm" :model="loginForm" :rules="loginRules" class="login-form" auto-complete="on" label-position="left">
+    <!-- 登录表单 -->
+    <el-form
+      ref="loginForm"
+      :model="loginForm"
+      :rules="loginRules"
+      class="login-form"
+      auto-complete="on"
+      label-position="left"
+    >
 
+      <!-- 标题区域 -->
       <div class="title-container">
         <h3 class="title">Login Form</h3>
       </div>
 
+      <!-- 用户名输入框 -->
       <el-form-item prop="username">
         <span class="svg-container">
           <svg-icon icon-class="user" />
@@ -21,6 +32,7 @@
         />
       </el-form-item>
 
+      <!-- 密码输入框 -->
       <el-form-item prop="password">
         <span class="svg-container">
           <svg-icon icon-class="password" />
@@ -36,13 +48,21 @@
           auto-complete="on"
           @keyup.enter.native="handleLogin"
         />
+        <!-- 密码显示/隐藏切换 -->
         <span class="show-pwd" @click="showPwd">
           <svg-icon :icon-class="passwordType === 'password' ? 'eye' : 'eye-open'" />
         </span>
       </el-form-item>
 
-      <el-button :loading="loading" type="primary" style="width:100%;margin-bottom:30px;" @click.native.prevent="handleLogin">Login</el-button>
+      <!-- 登录按钮 -->
+      <el-button
+        :loading="loading"
+        type="primary"
+        style="width:100%;margin-bottom:30px;"
+        @click.native.prevent="handleLogin"
+      >Login</el-button>
 
+      <!-- 提示信息 -->
       <div class="tips">
         <span style="margin-right:20px;">username: admin</span>
         <span> password: any</span>
@@ -53,40 +73,52 @@
 </template>
 
 <script>
+/**
+ * 登录页面组件
+ * 负责用户登录功能，包含表单验证和登录请求处理
+ */
 import { validUsername } from '@/utils/validate'
 
 export default {
   name: 'Login',
   data() {
+    // 用户名验证规则
     const validateUsername = (rule, value, callback) => {
       if (!validUsername(value)) {
-        callback(new Error('Please enter the correct user name'))
+        callback(new Error('请输入正确的用户名'))
       } else {
         callback()
       }
     }
+    // 密码验证规则
     const validatePassword = (rule, value, callback) => {
       if (value.length < 6) {
-        callback(new Error('The password can not be less than 6 digits'))
+        callback(new Error('密码长度不能少于6位'))
       } else {
         callback()
       }
     }
     return {
+      // 登录表单数据
       loginForm: {
         username: 'admin',
         password: '111111'
       },
+      // 表单验证规则
       loginRules: {
         username: [{ required: true, trigger: 'blur', validator: validateUsername }],
         password: [{ required: true, trigger: 'blur', validator: validatePassword }]
       },
+      // 加载状态
       loading: false,
+      // 密码输入框类型（password 或 text）
       passwordType: 'password',
+      // 登录成功后的重定向路径
       redirect: undefined
     }
   },
   watch: {
+    // 监听路由变化，获取重定向参数
     $route: {
       handler: function(route) {
         this.redirect = route.query && route.query.redirect
@@ -95,28 +127,28 @@ export default {
     }
   },
   methods: {
+    // 切换密码显示/隐藏
     showPwd() {
-      if (this.passwordType === 'password') {
-        this.passwordType = ''
-      } else {
-        this.passwordType = 'password'
-      }
+      this.passwordType = this.passwordType === 'password' ? '' : 'password'
       this.$nextTick(() => {
         this.$refs.password.focus()
       })
     },
+    // 处理登录
     handleLogin() {
       this.$refs.loginForm.validate(valid => {
         if (valid) {
           this.loading = true
+          // 调用 Vuex action 进行登录
           this.$store.dispatch('user/login', this.loginForm).then(() => {
+            // 登录成功后跳转到首页或重定向页面
             this.$router.push({ path: this.redirect || '/' })
             this.loading = false
           }).catch(() => {
             this.loading = false
           })
         } else {
-          console.log('error submit!!')
+          console.log('表单验证失败')
           return false
         }
       })
@@ -126,9 +158,7 @@ export default {
 </script>
 
 <style lang="scss">
-/* 修复input 背景不协调 和光标变色 */
-/* Detail see https://github.com/PanJiaChen/vue-element-admin/pull/927 */
-
+/* 修复 input 背景不协调和光标变色问题 */
 $bg:#283443;
 $light_gray:#fff;
 $cursor: #fff;
@@ -139,7 +169,7 @@ $cursor: #fff;
   }
 }
 
-/* reset element-ui css */
+/* 重置 element-ui 样式 */
 .login-container {
   .el-input {
     display: inline-block;

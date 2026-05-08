@@ -1,10 +1,19 @@
 <template>
+  <!-- 顶部导航栏组件 -->
   <div class="navbar">
-    <hamburger :is-active="sidebar.opened" class="hamburger-container" @toggleClick="toggleSideBar" />
+    <!-- 侧边栏切换按钮 -->
+    <hamburger
+      :is-active="sidebar.opened"
+      class="hamburger-container"
+      @toggleClick="toggleSideBar"
+    />
 
+    <!-- 面包屑导航 -->
     <breadcrumb class="breadcrumb-container" />
 
+    <!-- 右侧菜单区域 -->
     <div class="right-menu">
+      <!-- 用户头像下拉菜单 -->
       <el-dropdown class="avatar-container" trigger="click">
         <div class="avatar-wrapper">
           <img :src="avatar+'?imageView2/1/w/80/h/80'" class="user-avatar">
@@ -12,9 +21,7 @@
         </div>
         <el-dropdown-menu slot="dropdown" class="user-dropdown">
           <router-link to="/">
-            <el-dropdown-item>
-              Home
-            </el-dropdown-item>
+            <el-dropdown-item>Home</el-dropdown-item>
           </router-link>
           <a target="_blank" href="https://github.com/PanJiaChen/vue-admin-template/">
             <el-dropdown-item>Github</el-dropdown-item>
@@ -32,27 +39,36 @@
 </template>
 
 <script>
+/**
+ * 顶部导航栏组件
+ * 包含侧边栏切换按钮、面包屑导航、用户头像下拉菜单
+ */
 import { mapGetters } from 'vuex'
-import Breadcrumb from '@/components/Breadcrumb'
-import Hamburger from '@/components/Hamburger'
+import Breadcrumb from '@/components/Breadcrumb' // 面包屑组件
+import Hamburger from '@/components/Hamburger'   // 侧边栏切换按钮组件
 
 export default {
+  name: 'Navbar',
   components: {
     Breadcrumb,
     Hamburger
   },
   computed: {
+    // 从 Vuex 获取状态
     ...mapGetters([
-      'sidebar',
-      'avatar'
+      'sidebar',  // 侧边栏状态
+      'avatar'    // 用户头像
     ])
   },
   methods: {
+    // 切换侧边栏展开/收起
     toggleSideBar() {
       this.$store.dispatch('app/toggleSideBar')
     },
+    // 登出操作
     async logout() {
       await this.$store.dispatch('user/logout')
+      // 登出后跳转到登录页，并携带重定向参数
       this.$router.push(`/login?redirect=${this.$route.fullPath}`)
     }
   }
@@ -67,6 +83,7 @@ export default {
   background: #fff;
   box-shadow: 0 1px 4px rgba(0,21,41,.08);
 
+  // 侧边栏切换按钮容器
   .hamburger-container {
     line-height: 46px;
     height: 100%;
@@ -80,10 +97,12 @@ export default {
     }
   }
 
+  // 面包屑容器
   .breadcrumb-container {
     float: left;
   }
 
+  // 右侧菜单区域
   .right-menu {
     float: right;
     height: 100%;
@@ -111,6 +130,7 @@ export default {
       }
     }
 
+    // 用户头像容器
     .avatar-container {
       margin-right: 30px;
 

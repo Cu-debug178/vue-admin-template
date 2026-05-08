@@ -1,43 +1,47 @@
+/**
+ * Vue 应用入口文件
+ * 负责初始化 Vue 实例、配置插件、加载全局资源
+ */
 import Vue from 'vue'
 
-import 'normalize.css/normalize.css' // A modern alternative to CSS resets
+// 引入 normalize.css 统一不同浏览器的基础样式
+import 'normalize.css/normalize.css'
 
+// 引入 ElementUI 组件库及样式
 import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
-import locale from 'element-ui/lib/locale/lang/en' // lang i18n
+import locale from 'element-ui/lib/locale/lang/en' // 语言国际化配置
 
-import '@/styles/index.scss' // global css
+// 引入全局样式文件
+import '@/styles/index.scss'
 
+// 引入根组件、状态管理、路由配置
 import App from './App'
 import store from './store'
 import router from './router'
 
-import '@/icons' // icon
-import '@/permission' // permission control
+// 引入图标组件和路由权限控制
+import '@/icons'
+import '@/permission'
 
-/**
- * If you don't want to use mock-server
- * you want to use MockJs for mock api
- * you can execute: mockXHR()
- *
- * Currently MockJs will be used in the production environment,
- * please remove it before going online ! ! !
- */
+// 生产环境下启用 Mock 数据模拟
 if (process.env.NODE_ENV === 'production') {
   const { mockXHR } = require('../mock')
   mockXHR()
 }
 
-// set ElementUI lang to EN
+// 配置 ElementUI 使用英文语言环境
 Vue.use(ElementUI, { locale })
-// 如果想要中文版 element-ui，按如下方式声明
+// 如果需要中文版，取消注释下行并注释上行
 // Vue.use(ElementUI)
 
+// 关闭生产环境下的 Vue 提示信息
 Vue.config.productionTip = false
 
+// 创建 Vue 实例并挂载到页面
 new Vue({
   el: '#app',
-  router,
-  store,
-  render: h => h(App)
+  router,    // 注入路由
+  store,     // 注入状态管理
+  render: h => h(App)  // 渲染根组件
 })
