@@ -1,18 +1,27 @@
-// sidebar
+/**
+ * 样式变量定义
+ * 定义侧边栏、菜单等组件的颜色、尺寸等样式变量
+ * 支持在 JavaScript 中通过 :export 导入使用
+ */
+
+// 侧边栏菜单文字颜色
 $menuText:#bfcbd9;
-$menuActiveText:#409EFF;
-$subMenuActiveText:#f4f4f5; //https://github.com/ElemeFE/element/issues/12951
+$menuActiveText:#409EFF;             // 激活菜单文字颜色
+$subMenuActiveText:#f4f4f5;          // 子菜单激活文字颜色
 
+// 侧边栏菜单背景颜色
 $menuBg:#304156;
-$menuHover:#263445;
+$menuHover:#263445;                  // 菜单悬停背景色
 
+// 子菜单背景颜色
 $subMenuBg:#1f2d3d;
-$subMenuHover:#001528;
+$subMenuHover:#001528;               // 子菜单悬停背景色
 
+// 侧边栏宽度
 $sideBarWidth: 210px;
 
-// the :export directive is the magic sauce for webpack
-// https://www.bluematador.com/blog/how-to-share-variables-between-js-and-sass
+// :export 指令用于在 JavaScript 中导入 SCSS 变量
+// 这是 Webpack 的特殊功能，允许 JS 和 SCSS 共享变量
 :export {
   menuText: $menuText;
   menuActiveText: $menuActiveText;

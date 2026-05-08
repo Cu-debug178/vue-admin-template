@@ -1,6 +1,12 @@
 /**
- * @param {string} url
- * @returns {Object}
+ * Mock 工具函数
+ * 提供 URL 参数解析等功能
+ */
+
+/**
+ * 将 URL 查询参数解析为对象
+ * @param {string} url - URL 字符串
+ * @returns {Object} 解析后的参数对象
  */
 function param2Obj(url) {
   const search = decodeURIComponent(url.split('?')[1]).replace(/\+/g, ' ')

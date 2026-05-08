@@ -1,3 +1,7 @@
+/**
+ * 用户相关 Mock 数据
+ * 模拟用户登录、获取用户信息、登出等接口
+ */
 
 const tokens = {
   admin: {
@@ -23,8 +27,9 @@ const users = {
   }
 }
 
+// 导出 Mock 接口配置数组
 module.exports = [
-  // user login
+  // 用户登录接口
   {
     url: '/vue-admin-template/user/login',
     type: 'post',
@@ -32,7 +37,7 @@ module.exports = [
       const { username } = config.body
       const token = tokens[username]
 
-      // mock error
+      // 模拟登录失败情况
       if (!token) {
         return {
           code: 60204,
@@ -47,7 +52,7 @@ module.exports = [
     }
   },
 
-  // get user info
+  // 获取用户信息接口
   {
     url: '/vue-admin-template/user/info\.*',
     type: 'get',
@@ -55,7 +60,7 @@ module.exports = [
       const { token } = config.query
       const info = users[token]
 
-      // mock error
+      // 模拟获取用户信息失败
       if (!info) {
         return {
           code: 50008,
@@ -70,7 +75,7 @@ module.exports = [
     }
   },
 
-  // user logout
+  // 用户登出接口
   {
     url: '/vue-admin-template/user/logout',
     type: 'post',

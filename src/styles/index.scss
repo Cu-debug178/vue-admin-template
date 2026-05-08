@@ -1,53 +1,66 @@
-@import './variables.scss';
-@import './mixin.scss';
-@import './transition.scss';
-@import './element-ui.scss';
-@import './sidebar.scss';
+/**
+ * 全局样式文件
+ * 引入各个模块的样式，并定义全局基础样式
+ */
+@import './variables.scss';    // 样式变量（颜色、尺寸等）
+@import './mixin.scss';        // SCSS 混入（复用样式片段）
+@import './transition.scss';   // 过渡动画样式
+@import './element-ui.scss';   // Element UI 组件样式覆盖
+@import './sidebar.scss';      // 侧边栏样式
 
+// 全局 body 样式
 body {
   height: 100%;
-  -moz-osx-font-smoothing: grayscale;
-  -webkit-font-smoothing: antialiased;
-  text-rendering: optimizeLegibility;
-  font-family: Helvetica Neue, Helvetica, PingFang SC, Hiragino Sans GB, Microsoft YaHei, Arial, sans-serif;
+  -moz-osx-font-smoothing: grayscale;      // Mac Firefox 字体平滑
+  -webkit-font-smoothing: antialiased;     // Chrome/Safari 字体平滑
+  text-rendering: optimizeLegibility;       // 文本渲染优化
+  font-family: Helvetica Neue, Helvetica, PingFang SC, Hiragino Sans GB, Microsoft YaHei, Arial, sans-serif; // 系统字体栈
 }
 
+// label 标签字体加粗
 label {
   font-weight: 700;
 }
 
+// html 样式
 html {
   height: 100%;
-  box-sizing: border-box;
+  box-sizing: border-box;   // CSS3 盒模型
 }
 
+// 根元素样式
 #app {
   height: 100%;
 }
 
+// 所有元素使用 border-box 盒模型
 *,
 *:before,
 *:after {
   box-sizing: inherit;
 }
 
+// 链接聚焦和激活状态去除轮廓
 a:focus,
 a:active {
   outline: none;
 }
 
+// 链接通用样式
 a,
 a:focus,
 a:hover {
   cursor: pointer;
   color: inherit;
-  text-decoration: none;
+  text-decoration: none;   // 去除下划线
 }
 
+// div 聚焦去除轮廓
 div:focus {
   outline: none;
 }
 
+// 清除浮动
 .clearfix {
   &:after {
     visibility: hidden;
@@ -59,7 +72,7 @@ div:focus {
   }
 }
 
-// main-container global css
+// 主容器全局样式
 .app-container {
   padding: 20px;
 }
